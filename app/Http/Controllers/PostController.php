@@ -51,6 +51,10 @@ class PostController extends Controller
                 'user' => $post->user ? ['id'=>$post->user->id,'name'=>$post->user->name] : null,
                 'category' => $post->category ? ['id'=>$post->category->id,'name'=>$post->category->name] : null,
             ],
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
         ]);
     }
 }

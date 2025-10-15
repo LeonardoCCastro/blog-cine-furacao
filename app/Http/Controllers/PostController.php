@@ -28,10 +28,6 @@ class PostController extends Controller
 
         return Inertia::render('Posts/Index', [
             'posts' => $posts,
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
         ]);
     }
 

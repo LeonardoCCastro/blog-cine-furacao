@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use Inertia\Inertia;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,5 +24,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Vite::prefetch(concurrency: 3);
+        Inertia::share([
+            'canLogin' => fn () => Route::has('login'),
+            'canRegister' => fn () => Route::has('register'),
+            'laravelVersion' => fn () => Application::VERSION,
+            'phpVersion' => fn () => PHP_VERSION,
+        ]);
     }
 }

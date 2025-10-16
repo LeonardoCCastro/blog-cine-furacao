@@ -1,6 +1,14 @@
 <script setup>
-import { usePage } from '@inertiajs/vue3';
+import { usePage,Head } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
+
+defineProps({
+  title: {
+    type: String,
+    required: false,
+    default: 'Blog Furacão'
+  }
+});
 
 const page = usePage();
 const canLogin = page.props.canLogin;
@@ -27,6 +35,7 @@ function toggleTheme() {
 }
 </script>
 <template>
+    <Head :title="title" />
     <header>
         <nav class="border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -43,17 +52,17 @@ function toggleTheme() {
             </button>
             <div class="hidden w-full md:block md:w-auto" id="navbar-solid-bg">
                 <ul v-if="canLogin" class="flex flex-col font-medium mt-4 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-transparent dark:border-gray-700">
-                <li v-if="$page.props.auth.user">
-                    <a :href="route('dashboard')" class="block py-2 px-3 md:p-0 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Dashboard</a>
-                </li>
-                <div v-else class="flex flex-col md:flex-row md:space-x-8 rtl:space-x-reverse">         
-                    <li>
-                    <a :href="route('login')" class="block py-2 px-3 md:p-0 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Login</a>
+                    <li v-if="$page.props.auth.user">
+                        <a :href="route('dashboard')" class="block py-2 px-3 md:p-0 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Dashboard</a>
                     </li>
-                    <li v-if="canRegister">
-                    <a :href="route('register')" class="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Register</a>
-                    </li>
-                </div>
+                    <div v-else class="flex flex-col md:flex-row md:space-x-8 rtl:space-x-reverse">         
+                        <li>
+                        <a :href="route('login')" class="block py-2 px-3 md:p-0 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent" aria-current="page">Login</a>
+                        </li>
+                        <li v-if="canRegister">
+                        <a :href="route('register')" class="block py-2 px-3 md:p-0 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Register</a>
+                        </li>
+                    </div>
                 </ul>
             </div>
             <button id="theme-toggle" @click="toggleTheme" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 transition">

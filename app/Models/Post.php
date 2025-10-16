@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Post extends Model
 {
@@ -19,6 +20,13 @@ class Post extends Model
         'cover_image',
         'published',
     ];
+
+    protected static function booted()
+    {
+        static::creating(function ($post){
+            $post->slug = Str::slug($post->title);
+        });
+    }
 
     public function user()
     {

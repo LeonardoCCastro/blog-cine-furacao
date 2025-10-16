@@ -22,8 +22,7 @@
 </script>
 
 <template>
-  <Head title="Post"/>
-  <ApplicationLayout>
+  <ApplicationLayout title="Show">
     <main class="pb-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
         <header class="bg-[url('https://flowbite.s3.amazonaws.com/blocks/marketing-ui/articles/background.png')] w-full h-[460px] xl:h-[537px] bg-no-repeat bg-cover bg-center bg-blend-darken relative">
             <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>

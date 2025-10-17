@@ -6,12 +6,15 @@ const form = useForm({
   title: '',
   excerpt: '',
   content: '',
-  image: null,
+  cover_image: null,
 })
 
 function submit() {
   form.post(route('posts.store'), {
     forceFormData: true, 
+    onSuccess: () => {
+      form.reset()
+    },
   })
 }
 </script>
@@ -49,10 +52,10 @@ function submit() {
                                 <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                                 <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
                             </div>
-                            <input id="post-cover-image" name="post-cover-image" type="file" @input="form.image = $event.target.files[0]" class="hidden" />
+                            <input id="post-cover-image" name="post-cover-image" type="file" @input="form.cover_image = $event.target.files[0]" class="hidden" />
                         </label>
                     </div> 
-                    <span class="block mt-2 text-sm font-medium text-red-500">{{ form.errors.image }}</span>
+                    <span class="block mt-2 text-sm font-medium text-red-500">{{ form.errors.cover_image }}</span>
                   </div>
               </div>
               <button type="submit" :disabled="form.processing" class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">

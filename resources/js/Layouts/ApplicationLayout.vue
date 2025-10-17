@@ -1,6 +1,7 @@
 <script setup>
 import { usePage,Head } from '@inertiajs/vue3';
 import { ref, onMounted } from 'vue';
+import Alert from '@/Components/Alert.vue'
 
 defineProps({
   title: {
@@ -36,6 +37,7 @@ function toggleTheme() {
 </script>
 <template>
     <Head :title="title" />
+    
     <header>
         <nav class="border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -79,6 +81,8 @@ function toggleTheme() {
     </header>
 
     <main class="bg-white dark:bg-gray-900">
+        <Alert v-if="page.props.flash.success" type="success" :message="page.props.flash.success" />
+        <Alert v-if="page.props.flash.error" type="error" :message="page.props.flash.error" />
         <slot />
     </main>
 

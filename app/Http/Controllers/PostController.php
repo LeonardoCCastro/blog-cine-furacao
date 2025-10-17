@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Foundation\Application;
 
 class PostController extends Controller
 {
@@ -62,26 +63,36 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'excerpt' => 'nullable|string|max:500',
-            'content' => 'required|string',
-            'cover_image' => 'nullable|image|max:2048',
-        ]);
+        try {
+            $data = $request->validate([
+                'title' => 'required|string|max:255',
+                'excerpt' => 'nullable|string|max:500',
+                'content' => 'required|string',
+                'cover_image' => 'nullable|image|max:2048',
+            ]);
 
-        $path = null;
+            $path = null;
 
-        if($request->hasFile('image')){
-            $path = $request->file('image')->store('posts','public');
+            if ($request->hasFile('cover_image')) {
+                $path = $request->file('cover_image')->store('posts', 'public');
+            }
+
+            $request->user()->posts()->create([
+                'title' => $data['title'],
+                'excerpt' => $data['excerpt'] ?? null,
+                'content' => $data['content'],
+                'cover_image' => $path,
+            ]);
+
+            return back()->with('success', 'Post criado com sucesso!');
+        } catch (\Exception $e) {
+            Log::error('Erro ao criar post: ' . $e->getMessage(), [
+                'stack' => $e->getTraceAsString(),
+                'user_id' => $request->user()->id ?? null,
+            ]);
+
+            return back()->with('error', 'Ocorreu um erro ao criar o post. Tente novamente mais tarde.');
         }
-
-        $request->user()->posts()->create([
-            'title' => $data['title'],
-            'excerpt' => $data['excerpt'] ?? null,
-            'content' => $data['content'],
-            'cover_image' => $path,
-        ]);
-
-        return redirect()->route('dashboard')->with('success', 'Post criado com sucesso!');
     }
+
 }

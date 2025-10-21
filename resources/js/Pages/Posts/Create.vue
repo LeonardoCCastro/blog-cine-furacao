@@ -1,7 +1,9 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3'
+import { useForm, usePage } from '@inertiajs/vue3'
 import ApplicationLayout from '@/Layouts/ApplicationLayout.vue'
+import Alert from '@/Components/Alert.vue'
 
+const page = usePage();
 const form = useForm({
   title: '',
   excerpt: '',
@@ -10,6 +12,8 @@ const form = useForm({
 })
 
 function submit() {
+  page.props.flash.success = null
+  page.props.flash.error = null
   form.post(route('posts.store'), {
     forceFormData: true, 
     onSuccess: () => {
@@ -21,6 +25,8 @@ function submit() {
 
 <template>
   <ApplicationLayout title="Create">
+    <Alert v-if="page.props.flash.success" type="success" :message="page.props.flash.success" />
+    <Alert v-if="page.props.flash.error" type="error" :message="page.props.flash.error" />
     <section class="bg-white dark:bg-gray-900">
       <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
           <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Novo Post</h2>

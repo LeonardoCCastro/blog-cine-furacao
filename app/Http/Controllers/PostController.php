@@ -16,6 +16,7 @@ class PostController extends Controller
         $posts = Post::with('category', 'user')
             ->where('published', true)
             ->latest()
+            ->take(4)
             ->get()
             ->map(fn($post) => [
                 'id' => $post->id,
@@ -29,6 +30,28 @@ class PostController extends Controller
             ]);
 
         return Inertia::render('Posts/Index', [
+            'posts' => $posts,
+        ]);
+    }
+
+    public function all()
+    {
+        $posts = Post::with('category', 'user')
+            ->where('published', true)
+            ->latest()
+            ->paginate(5)
+            ->through(fn($post) => [
+                'id' => $post->id,
+                'title' => $post->title,
+                'slug' => $post->slug,
+                'excerpt' => $post->excerpt,
+                'cover_image' => $post->cover_image,
+                'created_at' => $post->created_at->toDateTimeString(),
+                'user' => $post->user ? ['id'=>$post->user->id, 'name'=>$post->user->name] : null,
+                'category' => $post->category ? ['id'=>$post->category->id, 'name'=>$post->category->name] : null,
+            ]);
+
+        return Inertia::render('Posts/All', [
             'posts' => $posts,
         ]);
     }

@@ -39,7 +39,7 @@ class PostController extends Controller
         $posts = Post::with('category', 'user')
             ->where('published', true)
             ->latest()
-            ->paginate(5)
+            ->paginate(3)
             ->through(fn($post) => [
                 'id' => $post->id,
                 'title' => $post->title,

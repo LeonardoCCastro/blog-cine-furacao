@@ -62,6 +62,9 @@ function toggleTheme() {
                 </div>
                 <div class="hidden w-full md:flex md:flex-row md:items-center md:w-auto md:space-x-8" id="navbar-solid-bg">
                     <ul v-if="canLogin" class="flex flex-col font-medium mt-4 rounded-lg bg-white md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-900 md:dark:bg-transparent dark:border-gray-700">
+                        <li>
+                            <a  :href="route('posts.all')" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" aria-current="page">News</a>
+                        </li>
                         <li v-if="$page.props.auth.user">
                             <a :href="route('dashboard')" class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" aria-current="page">Dashboard</a>
                         </li>
@@ -112,16 +115,19 @@ function toggleTheme() {
                     Flowbite    
                 </a>
                 <ul v-if="canLogin" class="flex flex-wrap items-center mb-4 text-sm text-gray-500 lg:mb-0 dark:text-gray-400">
+                    <li>
+                        <a :href="route('posts.all')" class="mr-4 hover:underline md:mr-6 ">News</a>
+                    </li>
                     <li v-if="$page.props.auth.user">
                         <a :href="route('dashboard')" class="mr-4 hover:underline md:mr-6 ">Dashboard</a>
                     </li>  
                     <div v-else class="flex flex-wrap">
-                    <li>
-                        <a :href="route('login')" class="mr-4 hover:underline md:mr-6 ">Login</a>
-                    </li>
-                    <li v-if="canRegister">
-                        <a :href="route('register')" class="mr-4 hover:underline md:mr-6">Register</a>
-                    </li>
+                        <li>
+                            <a :href="route('login')" class="mr-4 hover:underline md:mr-6 ">Login</a>
+                        </li>
+                        <li v-if="canRegister">
+                            <a :href="route('register')" class="mr-4 hover:underline md:mr-6">Register</a>
+                        </li>
                     </div>
                 </ul>
                 <form action="#" class="flex w-full max-w-sm lg:ml-auto">

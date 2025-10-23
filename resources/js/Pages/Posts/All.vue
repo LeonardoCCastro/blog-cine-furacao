@@ -4,7 +4,7 @@ import Pagination from '@/Components/Pagination.vue';
 import { Link } from '@inertiajs/vue3'
 defineProps({
     posts: {
-        type: Array,
+        type: Object,
     },
     canLogin: {
         type: Boolean,
@@ -41,12 +41,12 @@ defineProps({
                                         <svg aria-hidden="true" class="w-3 h-3 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                                         </svg>
-                                        Programming
+                                        Tag
                                     </span>
 
                                     <h2 class="text-2xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white">
-                                        <a href="#" class="hover:underline" title="">
-                                            How to quickly deploy a static website
+                                        <a :href="route('posts.show', post.slug)" class="hover:underline" title="{{ post.title }}">
+                                            {{ post.title }}
                                         </a>
                                     </h2>
 
@@ -54,17 +54,15 @@ defineProps({
                                         <img class="w-8 h-8 rounded-full" src="https://flowbite.com/marketing-ui/demo/images/users/michael-gough.png" alt="">
                                         <div class="text-lg font-medium leading-tight text-gray-900 dark:text-white">
                                             <div>
-                                                Micheal Gough
+                                                {{ post.user?.name ?? 'Anônimo' }}
                                             </div>
                                             <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                                Posted on Jan 31
+                                                {{ new Date(post.created_at).toLocaleDateString() }}
                                             </div>
                                         </div>
                                     </div>
 
-                                    <p class="text-base font-normal text-gray-500 dark:text-gray-400">
-                                        Static websites are now used to bootstrap lots of websites and are becoming the basis for a variety of tools that even influence both web designers and developers.
-                                    </p>
+                                    <p class="text-base font-normal text-gray-500 dark:text-gray-400" v-html="post.excerpt"></p>
 
                                     <div class="flex items-center justify-between gap-6">
                                         <div class="flex items-center gap-4">
@@ -83,7 +81,7 @@ defineProps({
                                             </button>
                                         </div>
 
-                                        <a href="#" title="" class="inline-flex items-center text-base font-semibold leading-tight text-primary-700 hover:underline dark:text-primary-500">
+                                        <a :href="route('posts.show', post.slug)" title="" class="inline-flex items-center text-base font-semibold leading-tight text-primary-700 hover:underline dark:text-primary-500">
                                             Read more
                                             <svg aria-hidden="true" class="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path>

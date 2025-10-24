@@ -39,21 +39,21 @@
                 </div>
                 <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><a :href="route('posts.show', post.slug)">{{ post.title }}</a></h2>
                 <p class="mb-5 font-light text-gray-500 dark:text-gray-400" v-html="post.excerpt"></p>
-                <div class="flex justify-between items-center">
-                    <div class="flex items-center space-x-4">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
+                    <div class="flex items-center space-x-4 w-full sm:w-auto justify-start">
                         <img class="w-7 h-7 rounded-full" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" alt="Jese Leos avatar" />
                         <span class="font-medium dark:text-white">
                             {{ post.user?.name ?? 'Anônimo' }}
                         </span>
                     </div>
-                    <a :href="route('posts.show', post.slug)" class="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline">
+                    <a :href="route('posts.show', post.slug)" class="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline w-full sm:w-auto justify-end">
                         Read more
                         <svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                     </a>
                 </div>
             </article>                
         </div>  
-        <div class="max-w-3xl p-4 mx-auto mt-8 rounded-md lg:mt-16 bg-gray-50 dark:bg-gray-800">
+        <div class="p-4 mx-auto mt-8 rounded-md lg:mt-16 bg-gray-50 dark:bg-gray-800">
             <div class="flex flex-col justify-end gap-3 md:gap-6 md:items-center md:flex-row">
                 <a :href="route('posts.all')" title="Read more" class="inline-flex items-center text-base font-medium text-primary-700 hover:underline dark:text-primary-500">
                     Read more

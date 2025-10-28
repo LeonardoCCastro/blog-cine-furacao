@@ -1,24 +1,12 @@
 <script setup>
-  import ApplicationLayout from '@/Layouts/ApplicationLayout.vue';
-  defineProps({ 
+import ApplicationLayout from '@/Layouts/ApplicationLayout.vue';
+
+defineProps({ 
     posts: {
-      type: Array,
-    },
-    canLogin: {
-        type: Boolean,
-    },
-    canRegister: {
-        type: Boolean,
-    },
-    laravelVersion: {
-        type: String,
-        required: true,
-    },
-    phpVersion: {
-        type: String,
-        required: true,
-    },
-  });
+        type: Array,
+    }
+});
+
 </script>
 
 <template>
@@ -37,7 +25,7 @@
                     </span>
                     <span class="text-sm">{{ new Date(post.created_at).toLocaleDateString() }}</span>
                 </div>
-                <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><a :href="route('posts.show', post.slug)">{{ post.title }}</a></h2>
+                <h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><Link :href="route('posts.show', post.slug)">{{ post.title }}</Link></h2>
                 <p class="mb-5 font-light text-gray-500 dark:text-gray-400" v-html="post.excerpt"></p>
                 <div class="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0">
                     <div class="flex items-center space-x-4 w-full sm:w-auto justify-start">
@@ -46,24 +34,23 @@
                             {{ post.user?.name ?? 'Anônimo' }}
                         </span>
                     </div>
-                    <a :href="route('posts.show', post.slug)" class="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline w-full sm:w-auto justify-end">
+                    <Link :href="route('posts.show', post.slug)" class="inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:underline w-full sm:w-auto justify-end">
                         Read more
                         <svg class="ml-2 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </a>
+                    </Link>
                 </div>
             </article>                
         </div>  
         <div class="p-4 mx-auto mt-8 rounded-md lg:mt-16 bg-gray-50 dark:bg-gray-800">
             <div class="flex flex-col justify-end gap-3 md:gap-6 md:items-center md:flex-row">
-                <a :href="route('posts.all')" title="Read more" class="inline-flex items-center text-base font-medium text-primary-700 hover:underline dark:text-primary-500">
+                <Link :href="route('posts.all')" title="Read more" class="inline-flex items-center text-base font-medium text-primary-700 hover:underline dark:text-primary-500">
                     Read more
                     <svg aria-hidden="true" class="w-4 h-4 ml-1.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                     </svg>
-                </a>
+                </Link>
             </div>
         </div>
     </div>
-    
   </ApplicationLayout>
 </template>

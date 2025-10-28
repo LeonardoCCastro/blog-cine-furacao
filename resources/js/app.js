@@ -7,13 +7,12 @@ if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localS
 import '../css/app.css';
 import './bootstrap';
 
-import { createInertiaApp } from '@inertiajs/vue3';
+import { createInertiaApp, router, Link } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createApp, h } from 'vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import 'flowbite';
 import { initFlowbite } from 'flowbite';
-import { router } from '@inertiajs/vue3';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -28,7 +27,8 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         const vueApp = createApp({ render: () => h(App, props) })
             .use(plugin)
-            .use(ZiggyVue);
+            .use(ZiggyVue)
+            .component('Link', Link);
 
         vueApp.mount(el);
 

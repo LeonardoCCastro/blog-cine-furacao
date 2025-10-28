@@ -1,6 +1,5 @@
 <script setup>
 import { computed } from 'vue'
-import { Link } from '@inertiajs/vue3'
 
 const props = defineProps({
   links: {
@@ -44,7 +43,6 @@ const compactLinks = computed(() => {
 
   return pages.filter(Boolean) // remove nulls
 })
-
 
 </script>
 

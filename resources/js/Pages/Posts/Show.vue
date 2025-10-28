@@ -1,29 +1,15 @@
 <script setup>
-    import ApplicationLayout from '@/Layouts/ApplicationLayout.vue';
-    defineProps({ 
+import ApplicationLayout from '@/Layouts/ApplicationLayout.vue';
+defineProps({ 
     post: {
         type: Object,
-    },
-    canLogin: {
-        type: Boolean,
-    },
-    canRegister: {
-        type: Boolean,
-    },
-    laravelVersion: {
-        type: String,
-        required: true,
-    },
-    phpVersion: {
-        type: String,
-        required: true,
-    },
-    });
+    }
+});
 </script>
 
 <template>
   <ApplicationLayout title="Show">
-    <main class="pb-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
+    <div class="pb-16 lg:pb-24 bg-white dark:bg-gray-900 antialiased">
         <header class="bg-[url('https://flowbite.s3.amazonaws.com/blocks/marketing-ui/articles/background.png')] w-full h-[460px] xl:h-[537px] bg-no-repeat bg-cover bg-center bg-blend-darken relative">
             <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
             <div class="absolute top-20 left-1/2 px-4 mx-auto w-full max-w-screen-xl -translate-x-1/2 xl:top-1/2 xl:-translate-y-1/2 xl:px-0">
@@ -452,7 +438,7 @@
                 </div>
             </aside>
         </div>
-    </main>
+    </div>
 
     <aside aria-label="Related articles" class="py-8 lg:py-24 bg-white dark:bg-gray-900">
         <div class="px-4 mx-auto max-w-screen-xl">

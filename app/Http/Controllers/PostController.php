@@ -34,25 +34,35 @@ class PostController extends Controller
         ]);
     }
 
-    public function all()
+    public function all(Request $request)
     {
-        $posts = Post::with('category', 'user')
-            ->where('published', true)
-            ->latest()
-            ->paginate(3)
-            ->through(fn($post) => [
-                'id' => $post->id,
-                'title' => $post->title,
-                'slug' => $post->slug,
-                'excerpt' => $post->excerpt,
-                'cover_image' => $post->cover_image,
-                'created_at' => $post->created_at->toDateTimeString(),
-                'user' => $post->user ? ['id'=>$post->user->id, 'name'=>$post->user->name] : null,
-                'category' => $post->category ? ['id'=>$post->category->id, 'name'=>$post->category->name] : null,
-            ]);
+        $query = Post::with('category', 'user')->where('published', true);
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where('title', 'like', "%{$search}%")
+                    ->orWhere('excerpt', 'like', "%{$search}%");
+        }
+
+        $posts = $query->latest()
+                        ->paginate(3)
+                        ->withQueryString()
+                        ->through(fn($post) => [
+                            'id' => $post->id,
+                            'title' => $post->title,
+                            'slug' => $post->slug,
+                            'excerpt' => $post->excerpt,
+                            'cover_image' => $post->cover_image,
+                            'created_at' => $post->created_at->toDateTimeString(),
+                            'user' => $post->user ? ['id'=>$post->user->id, 'name'=>$post->user->name] : null,
+                            'category' => $post->category ? ['id'=>$post->category->id, 'name'=>$post->category->name] : null,
+        ]);
 
         return Inertia::render('Posts/All', [
             'posts' => $posts,
+            'filters' => [
+                'search' => $request->search,
+            ],
         ]);
     }
 

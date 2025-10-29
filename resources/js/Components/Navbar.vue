@@ -17,8 +17,8 @@ const { isDark, toggleTheme } = useTheme();
 function performSearch() {
   router.get(route('posts.all'), { search: search.value }, { preserveState: true })
 }
-
 </script>
+
 <template>
     <header>
         <nav class="border-gray-200 bg-gray-50 dark:bg-gray-800 dark:border-gray-700">

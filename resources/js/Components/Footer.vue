@@ -1,5 +1,4 @@
 <script setup>
-
 defineProps({
   canLogin: {
     type: Boolean
@@ -14,8 +13,8 @@ defineProps({
     type: String
   }
 });
-
 </script>
+
 <template>
     <footer class="p-4 py-8 bg-gray-50 md:p-8 lg:p-10 dark:bg-gray-800">
         <div class="mx-auto max-w-screen-xl text-center">

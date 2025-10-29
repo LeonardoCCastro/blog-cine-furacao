@@ -10,8 +10,8 @@ defineProps({
     default: 'Blog Furacão'
   }
 });
-
 </script>
+
 <template>
     <Head :title="title" />
     <Navbar :canLogin="$page.props.canLogin" :canRegister="$page.props.canRegister"/>

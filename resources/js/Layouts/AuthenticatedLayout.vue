@@ -25,8 +25,11 @@ const showingNavigationDropdown = ref(false);
                         </div>
                         <!-- Navigation Links -->
                         <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                            <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                            <NavLink :href="route('admin.dashboard')" :active="route().current('admin.*') || route().current('dashboard')">
                                 Dashboard
+                            </NavLink>
+                            <NavLink :href="route('admin.users.index')" :active="route().current('admin.users.*')">
+                                Administradores
                             </NavLink>
                         </div>
                     </div>
@@ -69,8 +72,11 @@ const showingNavigationDropdown = ref(false);
             <!-- Responsive Navigation Menu -->
             <div :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown, }" class="sm:hidden" >
                 <div class="space-y-1 pb-3 pt-2">
-                    <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                    <ResponsiveNavLink :href="route('admin.dashboard')" :active="route().current('admin.*') || route().current('dashboard')">
                         Dashboard
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink :href="route('admin.users.index')" :active="route().current('admin.users.*')">
+                        Administradores
                     </ResponsiveNavLink>
                 </div>
                 <!-- Responsive Settings Options -->

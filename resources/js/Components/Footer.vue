@@ -41,7 +41,7 @@ defineProps({
                         <Link :href="route('posts.all')" class="mr-4 hover:underline md:mr-6 ">News</Link>
                     </li>
                     <li v-if="$page.props.auth.user">
-                        <Link :href="route('dashboard')" class="mr-4 hover:underline md:mr-6 ">Dashboard</Link>
+                        <Link :href="route('admin.dashboard')" class="mr-4 hover:underline md:mr-6 ">Dashboard</Link>
                     </li>  
                     <div v-else class="flex flex-wrap">
                         <li>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -50,6 +51,13 @@ class ProfileController extends Controller
         ]);
 
         $user = $request->user();
+        $adminsCount = User::query()->where('is_admin', true)->count();
+
+        if ($user->is_admin && $adminsCount <= 1) {
+            return Redirect::route('profile.edit')->withErrors([
+                'password' => 'Nao e possivel excluir sua conta sendo o unico administrador.',
+            ]);
+        }
 
         Auth::logout();
 

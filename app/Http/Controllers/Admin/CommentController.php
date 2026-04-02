@@ -11,6 +11,7 @@ class CommentController extends Controller
     public function destroy(Post $post, Comment $comment)
     {
         abort_unless($comment->post_id === $post->id, 404);
+        abort_unless(request()->user()->canManagePost($post), 403);
 
         $comment->delete();
 

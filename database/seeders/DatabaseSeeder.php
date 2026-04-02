@@ -19,6 +19,17 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'password' => Hash::make('password'),
             'is_admin' => true,
+            'is_writer' => false,
+            'email_verified_at' => now(),
+        ]);
+
+        User::query()->updateOrCreate([
+            'email' => 'writer@blog.test',
+        ], [
+            'name' => 'Writer',
+            'password' => Hash::make('password'),
+            'is_admin' => false,
+            'is_writer' => true,
             'email_verified_at' => now(),
         ]);
 

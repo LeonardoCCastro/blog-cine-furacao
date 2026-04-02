@@ -2,26 +2,35 @@
 import { Head } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import PostForm from './Form.vue';
+
+defineProps({
+    categories: {
+        type: Array,
+        required: true,
+    },
+});
 </script>
 
 <template>
-  <Head title="Novo Post" />
+    <Head title="Novo post" />
 
-  <AuthenticatedLayout>
-    <template #header>
-      <h2 class="text-xl font-semibold leading-tight text-gray-800">Novo post</h2>
-    </template>
+    <AuthenticatedLayout>
+        <template #header>
+            <div>
+                <h1 class="text-xl font-semibold text-gray-900 dark:text-white">Criar post</h1>
+                <p class="text-sm text-gray-500 dark:text-gray-400">
+                    Publique conteudos com o editor completo do blog.
+                </p>
+            </div>
+        </template>
 
-    <div class="py-8">
-      <div class="px-4 mx-auto max-w-4xl sm:px-6 lg:px-8">
-        <div class="p-6 bg-white rounded-lg shadow-sm">
-          <PostForm
-            method="post"
-            :submit-url="route('admin.posts.store')"
-            button-label="Criar post"
-          />
-        </div>
-      </div>
-    </div>
-  </AuthenticatedLayout>
+        <section class="mx-auto max-w-7xl">
+            <PostForm
+                method="post"
+                :categories="categories"
+                :submit-url="route('admin.posts.store')"
+                button-label="Criar post"
+            />
+        </section>
+    </AuthenticatedLayout>
 </template>

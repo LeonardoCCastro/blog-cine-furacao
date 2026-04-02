@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Post extends Model
@@ -14,6 +13,7 @@ class Post extends Model
     protected $fillable = [
         'user_id',
         'category_id',
+        'subcategory_id',
         'title',
         'slug',
         'excerpt',
@@ -21,10 +21,12 @@ class Post extends Model
         'image',
         'cover_image',
         'published',
+        'views',
     ];
 
     protected $casts = [
         'published' => 'boolean',
+        'views' => 'integer',
     ];
 
     protected $appends = [
@@ -54,6 +56,11 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function subcategory()
+    {
+        return $this->belongsTo(Category::class, 'subcategory_id');
+    }
+
     public function comments()
     {
         return $this->hasMany(Comment::class);
@@ -63,7 +70,11 @@ class Post extends Model
     {
         $path = $this->image ?: $this->cover_image;
 
-        return $path ? Storage::url($path) : null;
+        if ($path) {
+            return url('/storage/'.$path);
+        }
+
+        return asset('img/cinefuracao.webp');
     }
 
     protected static function generateUniqueSlug(string $title, ?int $ignoreId = null): string

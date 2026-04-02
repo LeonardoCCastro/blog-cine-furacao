@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'is_admin',
+        'is_writer',
     ];
 
     /**
@@ -45,9 +46,24 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'is_admin' => 'boolean',
+            'is_writer' => 'boolean',
         ];
     }
 
+    public function canAccessAdminPanel(): bool
+    {
+        return $this->is_admin || $this->is_writer;
+    }
+
+    public function canManagePost(Post $post): bool
+    {
+        return $this->is_admin || (int) $post->user_id === (int) $this->id;
+    }
+
+    public function isOnlyRemainingAdmin(): bool
+    {
+        return $this->is_admin && static::query()->where('is_admin', true)->count() <= 1;
+    }
 
     public function posts()
     {

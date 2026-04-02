@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Category;
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,38 @@ class HandleInertiaRequests extends Middleware
                 'success' => fn () => $request->session()->get('success'),
                 'error'   => fn () => $request->session()->get('error'),
             ],
+            'blogCategories' => fn () => Category::query()
+                ->whereNull('parent_id')
+                ->with('subcategories')
+                ->orderByRaw("case when slug = 'noticias' then 0 when slug = 'review' then 1 else 2 end")
+                ->orderBy('name')
+                ->get()
+                ->map(fn (Category $category) => [
+                    'id' => $category->id,
+                    'name' => $category->name,
+                    'slug' => $category->slug,
+                    'subcategories' => $category->subcategories
+                        ->sortBy('name')
+                        ->values()
+                        ->map(fn (Category $subcategory) => [
+                            'id' => $subcategory->id,
+                            'name' => $subcategory->name,
+                            'slug' => $subcategory->slug,
+                        ]),
+                ]),
+            'adminNotifications' => fn () => $request->user() && $request->user()->is_admin
+                ? [
+                    'unread_count' => $request->user()->unreadNotifications()->count(),
+                    'items' => $request->user()->notifications()->latest()->limit(8)->get()->map(
+                        fn ($notification) => [
+                            'id' => $notification->id,
+                            'read_at' => $notification->read_at?->toDateTimeString(),
+                            'created_at' => $notification->created_at?->toDateTimeString(),
+                            'data' => $notification->data,
+                        ]
+                    ),
+                ]
+                : null,
         ];
     }
 }

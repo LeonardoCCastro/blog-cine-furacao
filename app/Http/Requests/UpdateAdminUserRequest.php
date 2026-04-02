@@ -30,6 +30,7 @@ class UpdateAdminUserRequest extends FormRequest
                 Rule::unique(User::class)->ignore($adminUser->id),
             ],
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'in:admin,writer'],
         ];
     }
 }
